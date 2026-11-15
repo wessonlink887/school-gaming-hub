@@ -1,0 +1,18 @@
+from pathlib import Path
+import zipfile
+
+project = Path("/mnt/data/school-gaming-hub")
+index_path = project / "index.html"
+html = index_path.read_text(encoding="utf-8")
+html = html.replace(
+    '<div class="eyebrow">Your games • your videos • one hub</div>\n    <h1>School <span>Gaming</span> Hub</h1>',
+    '<div class="eyebrow">Wesson’s gaming hub</div>\n    <h1>Wesson\'s <span>School Gaming</span> Hub</h1>'
+)
+index_path.write_text(html, encoding="utf-8")
+
+zip_path = Path("/mnt/data/school-gaming-hub.zip")
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    for f in project.iterdir():
+        z.write(f, arcname=f"school-gaming-hub/{f.name}")
+
+print("Updated website files with Wesson at the top.")
