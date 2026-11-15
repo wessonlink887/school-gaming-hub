@@ -1,18 +1,98 @@
-from pathlib import Path
-import zipfile
 
-project = Path("/mnt/data/school-gaming-hub")
-index_path = project / "index.html"
-html = index_path.read_text(encoding="utf-8")
-html = html.replace(
-    '<div class="eyebrow">Your games • your videos • one hub</div>\n    <h1>School <span>Gaming</span> Hub</h1>',
-    '<div class="eyebrow">Wesson’s gaming hub</div>\n    <h1>Wesson\'s <span>School Gaming</span> Hub</h1>'
-)
-index_path.write_text(html, encoding="utf-8")
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wesson's School Gaming Hub</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 20px;
+  background: #090707;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+header {
+  padding: 25px 10px;
+  background: linear-gradient(135deg,#38080e,#120707);
+  border: 1px solid #e11d2e;
+  border-radius: 18px;
+}
+h1 { color: white; }
+h1 span { color: #ff263d; }
+p { color: #d9bfc2; }
+input {
+  width: 100%;
+  padding: 14px;
+  margin: 20px 0;
+  border-radius: 12px;
+  border: 1px solid #e11d2e;
+  background: #190d0f;
+  color: white;
+  font-size: 16px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 12px;
+}
+.app {
+  background: #1b1012;
+  border: 1px solid #69202b;
+  border-radius: 15px;
+  padding: 22px 10px;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+.app:hover {
+  background: #420d17;
+  border-color: #ff263d;
+}
+.emoji { display:block; font-size: 35px; margin-bottom: 10px; }
+footer { margin-top: 25px; color: #b8a6a6; font-size: 12px; }
+</style>
+</head>
+<body>
 
-zip_path = Path("/mnt/data/school-gaming-hub.zip")
-with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
-    for f in project.iterdir():
-        z.write(f, arcname=f"school-gaming-hub/{f.name}")
+<header>
+  <p>WESSON'S GAMING HUB</p>
+  <h1>Wesson's <span>School Gaming</span> Hub</h1>
+  <p>Your games. Your videos. One hub.</p>
+</header>
 
-print("Updated website files with Wesson at the top.")
+<input id="search" placeholder="Search games and apps...">
+
+<div class="grid" id="apps">
+  <a class="app" href="https://youtube.com"><span class="emoji">▶️</span>YouTube</a>
+  <a class="app" href="https://roblox.com"><span class="emoji">🧱</span>Roblox</a>
+  <a class="app" href="https://fortnite.com"><span class="emoji">🎯</span>Fortnite</a>
+  <a class="app" href="https://rocketleague.com"><span class="emoji">🚗</span>Rocket League</a>
+  <a class="app" href="https://discord.com"><span class="emoji">💬</span>Discord</a>
+  <a class="app" href="https://spotify.com"><span class="emoji">🎵</span>Spotify</a>
+  <a class="app" href="https://minecraft.net"><span class="emoji">⛏️</span>Minecraft</a>
+  <a class="app" href="https://twitch.tv"><span class="emoji">🟣</span>Twitch</a>
+  <a class="app" href="https://coolmathgames.com"><span class="emoji">🧠</span>Coolmath Games</a>
+  <a class="app" href="https://chess.com"><span class="emoji">♟️</span>Chess</a>
+</div>
+
+<footer>
+  Wesson's School Gaming Hub 🔴<br>
+  Opens official websites. School restrictions may still apply.
+</footer>
+
+<script>
+document.getElementById("search").addEventListener("input", function() {
+  const search = this.value.toLowerCase();
+  document.querySelectorAll(".app").forEach(app => {
+    app.style.display = app.textContent.toLowerCase().includes(search)
+      ? "block" : "none";
+  });
+});
+</script>
+
+</body>
+</html>
